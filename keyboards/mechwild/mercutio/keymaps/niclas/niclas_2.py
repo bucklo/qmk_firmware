@@ -15,10 +15,11 @@ def get_raw_hid_interface():
     if len(raw_hid_interfaces) == 0:
         return None
 
-    interface = hid.Device(path=raw_hid_interfaces[0]['path'])
+    interface = hid.device()
+    interface.open_path(raw_hid_interfaces[0]['path'])
 
-    print(f"Manufacturer: {interface.manufacturer}")
-    print(f"Product: {interface.product}")
+    print(f"Manufacturer: {interface.get_manufacturer_string()}")
+    print(f"Product: {interface.get_product_string()}")
 
     return interface
 
