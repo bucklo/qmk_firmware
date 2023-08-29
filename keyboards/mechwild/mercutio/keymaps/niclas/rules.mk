@@ -1,0 +1,4 @@
+ENCODER_MAP_ENABLE = yes
+OLED_ENABLE = yes
+VAI = yes
+RAW_ENABLE = yes
