@@ -18,7 +18,8 @@
 #include "raw_hid.h"
 #include "print.h"
 #include <string.h>
-
+// Flag to indicate whether data was received
+bool data_received = false;
 
 // Additional include for OLED support
 
@@ -29,24 +30,37 @@
 
     bool clear_screen = false;          // used to manage singular screen clears to prevent display glitch
 
+
     void raw_hid_receive(uint8_t *data, uint8_t length) {
         uint8_t response[length];
         memset(response, 0, length);
         response[0] = 'B';
 
         if(data[0] == 'A') {
+            // Indicate that data was received
+            data_received = true;
+
+            // Send a response back
             raw_hid_send(response, length);
+
+            // Debug print (optional)
+            uprintf("Received data with first byte 'A'.\n");
         }
     }
 
     bool oled_task_user(void) {
-        if (clear_screen == false) {
+        if (data_received) {
+            // Clear the OLED
             oled_clear();
             oled_render();
-            oled_write("Waiting for data...", false);
-            clear_screen = false;
+
+            // Write "Received Data" to the OLED
+            oled_write("Received Data", false);
+
+            // Optionally reset the flag if you only want the message to appear temporarily
+            // data_received = false;
         }
-        return false;
+        return false; // continue with the default OLED loop
     }
 #endif
 
