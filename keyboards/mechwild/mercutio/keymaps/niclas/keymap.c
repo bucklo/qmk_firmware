@@ -17,6 +17,8 @@
 #include QMK_KEYBOARD_H
 #include "raw_hid.h"
 #include "print.h"
+#include <string.h>
+
 
 // Additional include for OLED support
 
@@ -28,13 +30,12 @@
     bool clear_screen = false;          // used to manage singular screen clears to prevent display glitch
 
     void raw_hid_receive(uint8_t *data, uint8_t length) {
-        // Parse the data here and update OLED
-        if (data[0] == 0x01) {  // Custom command identifier
-            oled_clear();
-            oled_render();
-            oled_write("Received: ", false);
-            oled_write((char*)(data + 1), false);
-            print("\nReceived data");
+        uint8_t response[length];
+        memset(response, 0, length);
+        response[0] = 'B';
+
+        if(data[0] == 'A') {
+            raw_hid_send(response, length);
         }
     }
 
