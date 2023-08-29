@@ -1,8 +1,8 @@
 import hid
 
 # Your device's VID and PID
-VID = 0x1337 # REPLACE ME NICLAS
-PID = 0x1337 # REPLACE ME NICLAS
+VID = "0x1337" # REPLACE ME NICLAS
+PID = "0x1337" # REPLACE ME NICLAS
 
 print(f"Searching for device with VID={VID} PID={PID}")
 

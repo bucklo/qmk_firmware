@@ -15,5 +15,7 @@
  */
 
 #pragma once
+#undef VENDOR_ID
 #define VENDOR_ID 0x1337
+#undef PRODUCT_ID
 #define PRODUCT_ID 0x7331
