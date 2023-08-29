@@ -9,6 +9,8 @@ print(f"Searching for device with VID={VID} PID={PID}")
 # Find your device by VID and PID
 for d in hid.enumerate():
     keys = list(d.keys())
+    print(f"keys: {keys}")
+    print(f"current device: {d}")
     if d['vendor_id'] == VID and d['product_id'] == PID:
         path = d['path']
         print(f"Found device at {path}")
