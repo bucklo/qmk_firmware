@@ -9,6 +9,7 @@ for d in hid.enumerate():
     keys = list(d.keys())
     if d['vendor_id'] == YOUR_VID and d['product_id'] == YOUR_PID:
         path = d['path']
+        print(f"Found device at {path}")
         break
 else:
     raise ValueError('Device not found')
@@ -23,4 +24,5 @@ packet[0] = 0x01  # Custom command identifier
 packet[1:8] = "testing".encode('utf-8')  # The message, fits in 7 bytes
 
 # Send the packet
+print(f"Sending packet: {packet}")
 device.write(packet)
