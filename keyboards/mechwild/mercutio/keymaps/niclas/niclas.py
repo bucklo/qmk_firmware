@@ -4,6 +4,8 @@ import hid
 VID = 0x1337 # REPLACE ME NICLAS
 PID = 0x1337 # REPLACE ME NICLAS
 
+print(f"Searching for device with VID={VID} PID={PID}")
+
 # Find your device by VID and PID
 for d in hid.enumerate():
     keys = list(d.keys())
