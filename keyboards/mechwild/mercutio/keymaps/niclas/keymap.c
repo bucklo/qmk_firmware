@@ -39,7 +39,7 @@ char received_data_buffer[32] = "No Data";  // Initialize with "No Data"
         response[0] = 'B';
 
         // Copy received data to the buffer
-        for (int i = 1; i < length; ++i) {  // Starting from 1 because the first byte is the Report ID
+        for (int i = 0; i < length; ++i) {  // Starting from 1 because the first byte is the Report ID
             received_data_buffer[i - 1] = data[i];
         }
         received_data_buffer[length - 1] = '\0';  // Null-terminate the string
