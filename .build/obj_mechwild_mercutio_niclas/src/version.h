@@ -25,9 +25,9 @@
 
 #pragma once
 
-#define QMK_VERSION "47329c-dirty"
-#define QMK_BUILDDATE "2023-08-29-21:00:38"
-#define QMK_GIT_HASH  "47329cb08c*"
+#define QMK_VERSION "ac5cc2-dirty"
+#define QMK_BUILDDATE "2023-08-29-21:11:39"
+#define QMK_GIT_HASH  "ac5cc29941*"
 #define CHIBIOS_VERSION "11edb1"
 #define CHIBIOS_CONTRIB_VERSION "develop_2021_q3-231-ga224be"
 

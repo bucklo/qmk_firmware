@@ -6,7 +6,8 @@
  keyboards/mechwild/mercutio/lib/mercutiofont.c platforms/progmem.h \
  platforms/timer.h platforms/avr/_timer.h quantum/logging/print.h \
  quantum/util.h quantum/bitwise.h quantum/logging/sendchar.h \
- platforms/wait.h platforms/avr/_wait.h
+ platforms/avr/_print.h platforms/avr/xprintf.h platforms/wait.h \
+ platforms/avr/_wait.h
 
 keyboards/mechwild/mercutio/config.h:
 
@@ -33,6 +34,10 @@ quantum/util.h:
 quantum/bitwise.h:
 
 quantum/logging/sendchar.h:
+
+platforms/avr/_print.h:
+
+platforms/avr/xprintf.h:
 
 platforms/wait.h:
 

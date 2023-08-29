@@ -8,9 +8,10 @@
  quantum/action_layer.h quantum/action.h platforms/progmem.h \
  quantum/action_code.h quantum/logging/debug.h quantum/logging/print.h \
  quantum/util.h quantum/bitwise.h quantum/logging/sendchar.h \
- quantum/quantum.h platforms/avr/platform_deps.h platforms/wait.h \
- platforms/avr/_wait.h quantum/matrix.h platforms/gpio.h \
- platforms/pin_defs.h platforms/avr/_pin_defs.h platforms/avr/gpio.h \
+ platforms/avr/_print.h platforms/avr/xprintf.h quantum/quantum.h \
+ platforms/avr/platform_deps.h platforms/wait.h platforms/avr/_wait.h \
+ quantum/matrix.h platforms/gpio.h platforms/pin_defs.h \
+ platforms/avr/_pin_defs.h platforms/avr/gpio.h \
  quantum/quantum_keycodes.h quantum/keymap_extras/keymap_us.h \
  quantum/sequencer/sequencer.h quantum/quantum_keycodes_legacy.h \
  quantum/keycode_config.h quantum/eeconfig.h platforms/bootloader.h \
@@ -63,6 +64,10 @@ quantum/util.h:
 quantum/bitwise.h:
 
 quantum/logging/sendchar.h:
+
+platforms/avr/_print.h:
+
+platforms/avr/xprintf.h:
 
 quantum/quantum.h:
 

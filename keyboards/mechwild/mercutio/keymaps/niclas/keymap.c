@@ -16,6 +16,7 @@
 
 #include QMK_KEYBOARD_H
 #include "raw_hid.h"
+#include "print.h"
 
 // Additional include for OLED support
 
@@ -33,6 +34,7 @@
             oled_render();
             oled_write("Received: ", false);
             oled_write((char*)(data + 1), false);
+            print("\nReceived data");
         }
     }
 
@@ -41,6 +43,7 @@
             oled_clear();
             oled_render();
             oled_write("Waiting for data...", false);
+            print("\nWaiting for data...");
             clear_screen = false;
         }
         return false;
