@@ -40,7 +40,7 @@ def send_raw_report(data):
     try:
         interface.write(request_report)
 
-        response_report = interface.read(report_length, timeout=1000)
+        response_report = interface.read(report_length)
 
         print("Response:")
         print(response_report)
