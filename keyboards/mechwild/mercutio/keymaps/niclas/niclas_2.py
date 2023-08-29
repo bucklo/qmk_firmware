@@ -23,14 +23,17 @@ def get_raw_hid_interface():
 
     return interface
 
-def send_raw_report(data):
+def send_raw_report():
     interface = get_raw_hid_interface()
 
     if interface is None:
         print("No device found")
         sys.exit(1)
 
-    request_data = [0x00] * (report_length + 1) # First byte is Report ID
+    user_input = input("Enter a string to send: ")
+    data = [ord(char) for char in user_input]
+
+    request_data = [0x00] * (report_length + 1)  # First byte is Report ID
     request_data[1:len(data) + 1] = data
     request_report = bytes(request_data)
 
@@ -39,8 +42,7 @@ def send_raw_report(data):
 
     try:
         interface.write(request_report)
-
-        response_report = interface.read(report_length)
+        response_report = interface.read(report_length, timeout=1000)
 
         print("Response:")
         print(response_report)
@@ -48,6 +50,4 @@ def send_raw_report(data):
         interface.close()
 
 if __name__ == '__main__':
-    send_raw_report([
-        0x41
-    ])
+    send_raw_report()

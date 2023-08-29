@@ -20,6 +20,8 @@
 #include <string.h>
 // Flag to indicate whether data was received
 bool data_received = false;
+// Buffer to hold the received data as a string
+char received_data_buffer[32] = "No Data";  // Initialize with "No Data"
 
 // Additional include for OLED support
 
@@ -36,16 +38,15 @@ bool data_received = false;
         memset(response, 0, length);
         response[0] = 'B';
 
-        if(data[0] == 'A') {
-            // Indicate that data was received
-            data_received = true;
-
-            // Send a response back
-            raw_hid_send(response, length);
-
-            // Debug print (optional)
-            uprintf("Received data with first byte 'A'.\n");
+        // Copy received data to the buffer
+        for (int i = 1; i < length; ++i) {  // Starting from 1 because the first byte is the Report ID
+            received_data_buffer[i - 1] = data[i];
         }
+        received_data_buffer[length - 1] = '\0';  // Null-terminate the string
+
+        // Indicate that data was received
+        data_received = true;
+        
     }
 
     bool oled_task_user(void) {
@@ -53,9 +54,8 @@ bool data_received = false;
             // Clear the OLED
             oled_clear();
             oled_render();
-
-            // Write "Received Data" to the OLED
-            oled_write("Received Data", false);
+            // Write the received data to the OLED
+            oled_write(received_data_buffer, false);
 
             // Optionally reset the flag if you only want the message to appear temporarily
             // data_received = false;
