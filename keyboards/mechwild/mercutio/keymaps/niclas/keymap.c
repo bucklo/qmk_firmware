@@ -41,7 +41,7 @@
             oled_clear();
             oled_render();
             oled_write("Waiting for data...", false);
-            clear_screen = true;
+            clear_screen = false;
         }
         return false;
     }
