@@ -39,6 +39,11 @@ char received_data_buffer[32] = "No Data";  // Initialize with "No Data"
         response[0] = 'B';
         // Debug: Print the length of the received data
         uprintf("Received data length: %d\n", length);
+        uprintf("Received data: ");
+        for (int i = 0; i < length; i++) {
+            uprintf("%c ", data[i]);
+        }
+        uprintf("\n");
 
         // Copy received data to the buffer
         for (int i = 1; i < length; ++i) {  // Starting from 1 because the first byte is the Report ID
