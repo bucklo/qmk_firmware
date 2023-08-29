@@ -42,10 +42,10 @@ def send_raw_report():
 
     try:
         interface.write(request_report)
-        response_report = interface.read(report_length)
+#        response_report = interface.read(report_length, timeout=1000)
 
-        print("Response:")
-        print(response_report)
+ #       print("Response:")
+ #       print(response_report)
     finally:
         interface.close()
 
