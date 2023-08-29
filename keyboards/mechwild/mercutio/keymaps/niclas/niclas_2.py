@@ -35,6 +35,7 @@ def send_raw_report():
 
     request_data = [0x00] * (report_length + 1)  # First byte is Report ID
     request_data[1:len(data) + 1] = data
+    print(request_data)
     request_report = bytes(request_data)
 
     print("Request:")
