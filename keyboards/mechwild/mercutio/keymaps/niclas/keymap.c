@@ -43,7 +43,6 @@
             oled_clear();
             oled_render();
             oled_write("Waiting for data...", false);
-            print("\nWaiting for data...");
             clear_screen = false;
         }
         return false;
