@@ -1,0 +1,1 @@
+-Wl,--gc-sections -Wl,-Map=.build/mechwild_mercutio_niclas.map,--cref   -lm 
