@@ -18,9 +18,35 @@
 #include "raw_hid.h"
 
 // Additional include for OLED support
-#ifdef OLED_ENABLE
-  #include "oled_driver.h"
+
+#ifdef OLED_ENABLE   // OLED Functionality
+    oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+        return OLED_ROTATION_180;       // flips the display 180 degrees if offhand
+    }
+
+    bool clear_screen = false;          // used to manage singular screen clears to prevent display glitch
+
+    void raw_hid_receive(uint8_t *data, uint8_t length) {
+        // Parse the data here and update OLED
+        if (data[0] == 0x01) {  // Custom command identifier
+            oled_clear();
+            oled_render();
+            oled_write("Received: ", false);
+            oled_write((char*)(data + 1), false);
+        }
+    }
+
+    bool oled_task_user(void) {
+        if (clear_screen == false) {
+            oled_clear();
+            oled_render();
+            oled_write("Waiting for data...", false);
+            clear_screen = true;
+        }
+        return false;
+    }
 #endif
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_all(
@@ -85,102 +111,6 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
                         tap_code(KC_VOLD);
                     }
                 }
-        }
-    return false;
-    }
-#endif
-
-#ifdef OLED_ENABLE   // OLED Functionality
-    oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-        return OLED_ROTATION_180;       // flips the display 180 degrees if offhand
-    }
-
-    bool clear_screen = false;          // used to manage singular screen clears to prevent display glitch
-    // static void render_name(void) {     // Render Mercutio Script Text
-    //   oled_write_P(PSTR("Niclas"), false);
-    // }
-
-    // static void render_weather(void) {     // Render Mercutio Script Text
-    //     oled_set_cursor(8,1);
-    //     oled_write_P(PSTR("desc: moln"), false);
-    //     oled_set_cursor(8,2);
-    //     oled_write_P(PSTR("high: 10.0"), false);
-    //     oled_set_cursor(8,3);
-    //     oled_write_P(PSTR("low:  5.0"), false);
-    //     oled_set_cursor(8,4);
-    //     oled_write_P(PSTR("rain: 0.0"), false);
-    // }
-
-
-    void raw_hid_receive(uint8_t *data, uint8_t length) {
-        // Parse the data here and update OLED
-        if (data[0] == 0x01) {  // Custom command identifier
-            oled_clear();
-            oled_render();
-            oled_write("Received: ", false);
-            oled_write((char*)(data + 1), false);
-        }
-    }
-
-    bool oled_task_user(void) {
-        led_t led_state = host_keyboard_led_state();
-        if ( !led_state.num_lock && !led_state.caps_lock && selected_layer == 0 && get_highest_layer(layer_state) == 0 ) {
-            // render_name();
-            // render_weather();
-            clear_screen = true;
-            // oled_set_cursor(8,1);
-            
-        } else {
-            if (clear_screen == true) {
-                oled_clear();
-                oled_render();
-                clear_screen = false;
-            }
-            // render_logo();
-            oled_set_cursor(8,2);
-            switch(selected_layer){
-                case 0:
-                    oled_write_P(PSTR("Simon"), false);
-                    break;
-                case 1:
-                    oled_write_P(PSTR("was"), false);
-                    break;
-                case 2:
-                    oled_write_P(PSTR("here"), false);
-                    break;
-                case 3:
-                    oled_write_P(PSTR("lol"), false);
-                    break;
-                default:
-                    oled_write_P(PSTR("Lock Layer ?"), false);    // Should never display, here as a catchall
-            }
-            oled_set_cursor(8,3);
-            if (get_highest_layer(layer_state) == selected_layer) {
-                oled_write_P(PSTR("            "), false);
-            } else {
-                switch (get_highest_layer(layer_state)) {
-                    case 0:
-                        oled_write_P(PSTR("all"), false);
-                        break;
-                    case 1:
-                        oled_write_P(PSTR("your"), false);
-                        break;
-                    case 2:
-                        oled_write_P(PSTR("base"), false);
-                        break;
-                    case 3:
-                        oled_write_P(PSTR("are"), false);
-                        break;
-                    default:
-                        oled_write_P(PSTR("Temp Layer ?"), false);    // Should never display, here as a catchall
-                }
-            }
-            led_t led_state = host_keyboard_led_state();
-            oled_set_cursor(8,0);
-            oled_write_P(led_state.scroll_lock ? PSTR("SCRLK") : PSTR("     "), false);
-            oled_set_cursor(8,1);
-            oled_write_P(led_state.num_lock ? PSTR("NLCK ") : PSTR("     "), false);
-            oled_write_P(led_state.caps_lock ? PSTR("CAPS ") : PSTR("     "), false);
         }
     return false;
     }
