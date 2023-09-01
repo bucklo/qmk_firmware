@@ -38,7 +38,7 @@ char received_data_buffer[32] = "No Data";  // Initialize with "No Data"
         memset(response, 0, length);
         response[0] = 'B';
         // Debug: Print the length of the received data
-        oled_set_cursor(8, 3);
+        
         uprintf("Received data length: %d\n", length);
         uprintf("Received data: ");
         for (int i = 0; i < length; i++) {
@@ -65,8 +65,8 @@ char received_data_buffer[32] = "No Data";  // Initialize with "No Data"
             oled_render();
             // Write the received data to the OLED
 
-            
-            oled_write(received_data_buffer, false);
+            oled_set_cursor(0, 0);
+            oled_write(received_data_buffer, true);
 
             // Optionally reset the flag if you only want the message to appear temporarily
             // data_received = false;
