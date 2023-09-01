@@ -66,7 +66,7 @@ char received_data_buffer[32] = "No Data";  // Initialize with "No Data"
             // Write the received data to the OLED
 
             oled_set_cursor(0, 0);
-            oled_write(received_data_buffer, true);
+            oled_write(received_data_buffer, false);
 
             // Optionally reset the flag if you only want the message to appear temporarily
             // data_received = false;
