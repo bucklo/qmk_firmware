@@ -38,6 +38,7 @@ char received_data_buffer[32] = "No Data";  // Initialize with "No Data"
         memset(response, 0, length);
         response[0] = 'B';
         // Debug: Print the length of the received data
+        oled_set_cursor(1, 1);
         uprintf("Received data length: %d\n", length);
         uprintf("Received data: ");
         for (int i = 0; i < length; i++) {
