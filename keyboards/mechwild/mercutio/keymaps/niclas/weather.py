@@ -55,7 +55,8 @@ def send_raw_report(data_string):
 
     data_string = '\0' + data_string
 
-    data = [ord(char) for char in user_input]
+    #data = [ord(char) for char in user_input]
+    data = [ord(char) for char in data_string]
 
     request_data = [0x00] * (report_length + 1)  # First byte is Report ID
     request_data[1:len(data) + 1] = data
