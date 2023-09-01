@@ -50,6 +50,7 @@ char received_data_buffer[32] = "No Data";  // Initialize with "No Data"
         for (int i = 1; i < length; ++i) {  // Starting from 1 because the first byte is the Report ID
             received_data_buffer[i - 1] = data[i];
         }
+        uprintf("Data to be displayed: %s\n", received_data_buffer);
         received_data_buffer[length - 1] = '\0';  // Null-terminate the string
 
         // Indicate that data was received
