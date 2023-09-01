@@ -23,7 +23,7 @@ bool data_received = false;
 // Buffer to hold the received data as a string
 char received_data_buffer[32] = "No Data";  // Initialize with "No Data"
 
-int counter = 0;
+
 // Additional include for OLED support
 
 #ifdef OLED_ENABLE   // OLED Functionality
@@ -60,22 +60,24 @@ int counter = 0;
     }
 
     bool oled_task_user(void) {
-        if (counter > 2) {
-            counter = 0;
-        }
-
+        
         if (data_received) {
             // Clear the OLED
             oled_clear();
             oled_render();
             // Write the received data to the OLED
 
-            oled_set_cursor(0, counter);
+            oled_set_cursor(0, 0);
+            oled_write(received_data_buffer, false);
+
+            oled_set_cursor(0, 1);
+            oled_write(received_data_buffer, false);
+
+            oled_set_cursor(0, 2);
             oled_write(received_data_buffer, false);
 
             // Optionally reset the flag if you only want the message to appear temporarily
             data_received = false;
-            counter += 1;
         }
         return false; // continue with the default OLED loop
     }

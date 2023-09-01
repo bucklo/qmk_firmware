@@ -1,5 +1,7 @@
 import sys
 import hid
+import requests
+import json
 
 vendor_id     = 0x1337
 product_id    = 0x7331
@@ -8,34 +10,23 @@ usage_page    = 0xFF60
 usage         = 0x61
 report_length = 32
 
-# Your OpenWeatherMap API Key
-api_key = "YOUR_API_KEY_HERE"
 
-# City for which to get the weather
-city = "London"
 
-def get_weather_adjective(api_key, city):
+def get_weather_adjective():
     # Fetch weather data
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+    api_key = "ivSsTf6kzhFopRQhACfj1vD0k6u4GbXk"
+    url = f"http://dataservice.accuweather.com/currentconditions/v1/308266?apikey={api_key}&details=true"
+
     response = requests.get(url)
     data = json.loads(response.text)
 
     # Extract weather description
-    weather_description = data['weather'][0]['description']
+    weather_description = data[0]["WeatherText"]
+    print(weather_description)
 
-    # Convert description to an adjective
-    if "clear" in weather_description:
-        return "Sunny"
-    elif "cloud" in weather_description:
-        return "Cloudy"
-    elif "rain" in weather_description:
-        return "Rainy"
-    elif "snow" in weather_description:
-        return "Snowy"
-    elif "thunder" in weather_description:
-        return "Stormy"
-    else:
-        return "Unknown"
+    return weather_description
+
+
 
 def get_raw_hid_interface():
     device_interfaces = hid.enumerate(vendor_id, product_id)
@@ -52,15 +43,18 @@ def get_raw_hid_interface():
 
     return interface
 
-def send_raw_report():
+def send_raw_report(data_string):
     interface = get_raw_hid_interface()
 
     if interface is None:
         print("No device found")
         sys.exit(1)
 
-    user_input = input("Enter a string to send: ")
-    user_input = '\0' + user_input
+    #user_input = input("Enter a string to send: ")
+    #user_input = '\0' + user_input
+
+    data_string = '\0' + data_string
+
     data = [ord(char) for char in user_input]
 
     request_data = [0x00] * (report_length + 1)  # First byte is Report ID
@@ -81,4 +75,4 @@ def send_raw_report():
         interface.close()
 
 if __name__ == '__main__':
-    send_raw_report()
+    send_raw_report(get_weather_adjective())
