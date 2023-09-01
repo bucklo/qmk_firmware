@@ -68,6 +68,16 @@ char received_data_buffer[32] = "No Data";  // Initialize with "No Data"
             oled_set_cursor(0, 0);
             oled_write(received_data_buffer, false);
 
+            oled_set_cursor(1, 0);
+            oled_write(received_data_buffer, false);
+
+            oled_set_cursor(3, 0);
+            oled_write(received_data_buffer, false);
+
+            oled_set_cursor(4, 0);
+            oled_write(received_data_buffer, false);
+
+
             // Optionally reset the flag if you only want the message to appear temporarily
             data_received = false;
         }
