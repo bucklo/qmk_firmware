@@ -31,6 +31,7 @@ def send_raw_report():
         sys.exit(1)
 
     user_input = input("Enter a string to send: ")
+    user_input = '\0' + user_input
     data = [ord(char) for char in user_input]
 
     request_data = [0x00] * (report_length + 1)  # First byte is Report ID
